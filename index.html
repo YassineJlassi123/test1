@@ -7,12 +7,12 @@
     <style>
         body {
             margin: 0;
-            overflow: hidden;
-            touch-action: none; /* Prevents default touch actions on mobile */
+            overflow: hidden; /* Prevent scrolling */
+            touch-action: none; /* Prevent touch actions on mobile */
         }
         a-scene {
-            width: 100vw;
-            height: 100vh;
+            width: 100vw;  /* Full width of the viewport */
+            height: 100vh; /* Full height of the viewport */
         }
     </style>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
@@ -20,15 +20,15 @@
 </head>
 <body>
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;">
-        <!-- Camera entity with a larger field of view -->
-        <a-entity camera="fov: 80" look-controls></a-entity>
+        <!-- Camera entity settings -->
+        <a-entity camera="fov: 80; far: 1000; near: 0.1" look-controls></a-entity>
 
-        <!-- Add a box positioned further away -->
-        <a-box position="0 0 -2" 
+        <!-- Box positioned 2 units away, ensures it's visible -->
+        <a-box position="0 0 -4" 
                rotation="0 45 0" 
                color="#4CC3D9" 
-               scale="0.3 0.3 0.3" 
-               ></a-box>
+               scale="0.5 0.5 0.5" 
+              </a-box>
     </a-scene>
 </body>
 </html>
