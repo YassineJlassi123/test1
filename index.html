@@ -46,11 +46,11 @@
             ></a-entity>
         </a-entity>
 
-        <!-- Rounded 3D Image -->
+        <!-- Rounded 3D Image using a Sphere -->
         <a-entity id="image3D" position="1.5 1.5 -3" scale="1 1 1">
-            <a-plane src="https://res.cloudinary.com/dvkjekfxi/image/upload/v1727263864/posts/sje7wxaxdwdrtraieinb.jpg"
-                     width="1" height="1" material="shader: flat; transparent: true" geometry="primitive: circle; radius: 0.5">
-            </a-plane>
+            <a-sphere src="https://res.cloudinary.com/dvkjekfxi/image/upload/v1727263864/posts/sje7wxaxdwdrtraieinb.jpg"
+                       radius="0.5" material="shader: flat; transparent: true; opacity: 0.8;">
+            </a-sphere>
         </a-entity>
 
         <!-- Lighting -->
