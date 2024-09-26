@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Fullscreen AR.js Mobile Example</title>
+    <title>Fullscreen AR.js Mobile Example - Full Camera View</title>
     <style>
         body {
             margin: 0;
@@ -13,6 +13,11 @@
             left: 0;
             width: 100%;
             height: 100%;
+        }
+        .a-canvas {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
         }
         #arjsDebugUIContainer {
             display: none;
@@ -26,9 +31,9 @@
         vr-mode-ui="enabled: false"
         renderer="logarithmicDepthBuffer: true; precision: medium;"
         embedded
-        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
+        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceWidth: 1280; sourceHeight: 960; displayWidth: 1280; displayHeight: 960;">
 
-        <a-camera position="0 0 0"></a-camera>
+        <a-camera></a-camera>
         
         <a-box position="0 0.5 -3"
                rotation="0 45 0"
@@ -38,25 +43,36 @@
     </a-scene>
 
     <script>
-        // Function to request fullscreen
         function requestFullscreen() {
             var elem = document.documentElement;
             if (elem.requestFullscreen) {
                 elem.requestFullscreen();
-            } else if (elem.mozRequestFullScreen) { // Firefox
+            } else if (elem.mozRequestFullScreen) {
                 elem.mozRequestFullScreen();
-            } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            } else if (elem.webkitRequestFullscreen) {
                 elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) { // IE/Edge
+            } else if (elem.msRequestFullscreen) {
                 elem.msRequestFullscreen();
             }
         }
 
-        // Request fullscreen when the page loads
         window.addEventListener('load', requestFullscreen);
-
-        // Request fullscreen again if the window is resized (e.g., when mobile keyboard appears)
         window.addEventListener('resize', requestFullscreen);
+
+        // Ensure the scene fills the entire screen
+        function resizeScene() {
+            var scene = document.querySelector('a-scene');
+            if (scene.hasLoaded) {
+                scene.resize();
+            } else {
+                scene.addEventListener('loaded', function() {
+                    scene.resize();
+                });
+            }
+        }
+
+        window.addEventListener('load', resizeScene);
+        window.addEventListener('resize', resizeScene);
     </script>
 </body>
 </html>
