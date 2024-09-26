@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Interactive 3D Text AR Experience</title>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <title>3D Extruded Text AR Experience</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <script src="https://unpkg.com/aframe-environment-component@1.3.1/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-troika-text@0.7.0/dist/aframe-troika-text.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -39,26 +39,14 @@
         <a-entity camera look-controls position="0 1.6 0"></a-entity>
         
         <a-entity id="text3D" position="0 1.5 -3" rotation="0 0 0" scale="1 1 1">
-            <a-text 
-                value="AR TEXT" 
-                color="#4CC3D9" 
-                align="center" 
-                width="5"
-                font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
-                side="double"
-                
-            ></a-text>
+            <a-entity
+                troika-text="value: AR TEXT; color: #4CC3D9; fontSize: 0.5; outlineWidth: 0.05; outlineColor: #ffffff; align: center; anchor: center; extrude: 0.1;"
+                material="metalness: 0.8; roughness: 0.2;"
+            ></a-entity>
         </a-entity>
 
         <a-light type="ambient" color="#ffffff" intensity="0.5"></a-light>
         <a-light type="directional" color="#ffffff" intensity="1" position="-1 1 1"></a-light>
-
-        <a-entity environment="preset: default; 
-                              groundTexture: none; 
-                              ground: none; 
-                              dressing: none; 
-                              fog: 0;
-                              shadowSize: 10;"></a-entity>
     </a-scene>
 
     <script>
@@ -119,7 +107,8 @@
                         event.touches[0].pageY - event.touches[1].pageY
                     );
                     const scale = currentDistance / initialDistance;
-                    text3D.object3D.scale.set(scale, scale, scale);
+                    text3D.object3D.scale.multiplyScalar(scale);
+                    initialDistance = currentDistance;
                 }
             });
         });
