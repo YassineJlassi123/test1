@@ -2,35 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Improved AR.js Mobile Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fullscreen AR.js Mobile Example</title>
     <style>
         body {
             margin: 0;
-            
-            touch-action: none;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
-        .a-enter-vr {
+        #arjsDebugUIContainer {
             display: none;
-        }
-        .a-canvas {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: cover !important;
         }
     </style>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 </head>
 <body>
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;" vr-mode-ui="enabled: false">
-        <a-camera look-controls="enabled: false"></a-camera>
+    <a-scene 
+        vr-mode-ui="enabled: false"
+        renderer="logarithmicDepthBuffer: true; precision: medium;"
+        embedded
+        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
+
+        <a-camera position="0 0 0"></a-camera>
         
-        <a-box position="0 0 -2"
+        <a-box position="0 0.5 -3"
                rotation="0 45 0"
                color="#4CC3D9"
-               scale="0.5 0.5 0.5">
+               scale="1 1 1">
         </a-box>
     </a-scene>
+
+    <script>
+        // Function to request fullscreen
+        function requestFullscreen() {
+            var elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { // Firefox
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { // IE/Edge
+                elem.msRequestFullscreen();
+            }
+        }
+
+        // Request fullscreen when the page loads
+        window.addEventListener('load', requestFullscreen);
+
+        // Request fullscreen again if the window is resized (e.g., when mobile keyboard appears)
+        window.addEventListener('resize', requestFullscreen);
+    </script>
 </body>
 </html>
